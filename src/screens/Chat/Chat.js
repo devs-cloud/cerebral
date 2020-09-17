@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {ScrollView, StyleSheet, TextInput, View} from 'react-native';
+import {Alert, ScrollView, StyleSheet, TextInput, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import {Button, ChatContent} from '../../components';
@@ -8,7 +8,7 @@ import {Colors, Metrics} from '../../constants';
 const Chat = () => {
   const scrollViewRef = useRef();
   const [input, setInput] = useState('');
-  const [isSendable, setIsSendable] = useState(true);
+  const [isSendable, setIsSendable] = useState(false);
   const [cur, setCur] = useState(0);
   const [questions, setQuestions] = useState([]);
   const [contents, setContents] = useState([]);
@@ -79,6 +79,10 @@ const Chat = () => {
         });
         setContents(newContents);
         setCur(1);
+        setIsSendable(true);
+      })
+      .catch((error) => {
+        Alert.alert('Loading failed...', "It's unable to fetch json data.");
       });
   }, []);
 
